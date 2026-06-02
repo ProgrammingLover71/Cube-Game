@@ -10,7 +10,8 @@ class RenderingMixin:
         self.render_hud(surface)
         
     def render_tiles(self, surface):
-        for tile in self.blocks:
+        sorted_blocks = sorted(self.blocks, key=lambda tile: tile.z_order)
+        for tile in sorted_blocks:
             tile_x = tile.rect.x
             if self.pos.x - tile_x > 720 and not (type(tile).__name__ == "GroundTile"):
                 continue

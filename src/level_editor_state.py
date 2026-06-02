@@ -9,6 +9,7 @@ from game_state.tile import (
     BlockTile,
     ShortBlockTile,
     ShortSpikeTile,
+    SolidBlockTile,
     YellowOrbTile,
     YellowPadTile,
     NormalSpikeTile,
@@ -28,6 +29,7 @@ class LevelEditorState:
     palette = [
         "block",
         "block_short",
+        "block_solid",
         "spike_norm",
         "spike_short",
         "orb_y",
@@ -39,6 +41,7 @@ class LevelEditorState:
     tile_classes = {
         "block": BlockTile,
         "block_short": ShortBlockTile,
+        "block_solid": SolidBlockTile,
         "spike_norm": NormalSpikeTile,
         "spike_short": ShortSpikeTile,
         "orb_y": YellowOrbTile,

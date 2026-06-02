@@ -6,6 +6,7 @@ import pygame as pg
 class Tile:
     """Base tile class."""
     default_color = (120, 120, 120)
+    z_order = 0
 
     def __init__(self, rect, color=None):
         self.rect = pg.Rect(rect)
@@ -95,6 +96,7 @@ class Tile:
 
 class BlockTile(Tile):
     default_color = (0, 0, 0)
+    z_order = 10
     ledge_landing_tolerance = 18
     ledge_climb_tolerance = 35
     underside_kill_speed = 650
@@ -153,6 +155,7 @@ class BlockTile(Tile):
 
 class ShortBlockTile(BlockTile):
     """Half-height block. Extends BlockTile — was 60 lines of copy-paste before."""
+    z_order = 10
 
     def _bake(self):
         w, h = self.rect.w, self.rect.h // 2
@@ -172,8 +175,57 @@ class ShortBlockTile(BlockTile):
         pg.draw.rect(surface, (255, 255, 255), draw_rect, width=max(1, int(2 * zoom)))
 
 
+class SolidBlockTile(Tile):
+    default_color = (0, 0, 0)
+    z_order = 5
+    ledge_landing_tolerance = 18
+    ledge_climb_tolerance = 35
+    underside_kill_speed = 650
+    alpha = 0.5
+
+    def __init__(self, rect, color=None):
+        super().__init__(rect, color)
+
+    def _bake(self):
+        w, h = self.rect.w, self.rect.h
+        surf = pg.Surface((w, h), pg.SRCALPHA)
+        col = (self.color[0], self.color[1], self.color[2], int(255 * self.alpha))
+        surf.fill(col)
+        self._baked = surf
+
+    def update(self, dt):
+        pass
+
+    def render_faded_rect(self, surface, rect):
+        # Override to render solid color instead of faded
+        solid = pg.Surface(rect.size)
+        col = (self.color[0], self.color[1], self.color[2], int(255 * self.alpha))
+        solid.fill(col)
+        surface.blit(solid, rect.topleft)
+
+    def render(self, surface, camera_x=0, camera_y=0, zoom=1.0):
+        if self._baked is not None and zoom == 1.0:
+            surface.blit(self._baked, (self.rect.x - int(camera_x), self.rect.y - int(camera_y)))
+            return
+        draw_rect = self.screen_rect(camera_x, camera_y, zoom)
+        self.render_faded_rect(surface, draw_rect)
+
+    def handle_collision(self, player_rect, player_vel, prev_bottom):
+        return (True, None, None, False, None)
+
+    def is_near_top_lip(self, player_rect, prev_bottom):
+        block = self.rect
+        previous_feet_near_top = prev_bottom <= block.top + self.ledge_landing_tolerance
+        current_feet_near_top = player_rect.bottom <= block.top + self.ledge_climb_tolerance
+        return previous_feet_near_top or current_feet_near_top
+
+    def on_click(self, gs):
+        pass
+
+
 class GroundTile(BlockTile):
     default_color = (35, 95, 150)
+    z_order = -100
 
     def _bake(self):
         pass  # 50000px wide — baking this would be insane
@@ -210,6 +262,7 @@ class GroundTile(BlockTile):
 
 class NormalSpikeTile(Tile):
     default_color = (0, 0, 0)
+    z_order = 20
 
     def __init__(self, rect, color=None):
         super().__init__(rect, color)
@@ -256,6 +309,7 @@ class NormalSpikeTile(Tile):
 
 class ShortSpikeTile(Tile):
     default_color = (0, 0, 0)
+    z_order = 20
 
     def __init__(self, rect, color=None):
         super().__init__(rect, color)
@@ -312,6 +366,7 @@ class ShortSpikeTile(Tile):
 
 class YellowOrbTile(Tile):
     default_color = (255, 255, 30)
+    z_order = 20
 
     def __init__(self, rect, color=None):
         super().__init__(rect, color)
@@ -361,6 +416,7 @@ class YellowOrbTile(Tile):
 
 class YellowPadTile(Tile):
     default_color = (255, 255, 30)
+    z_order = 20
 
     def __init__(self, rect, color=None):
         super().__init__(rect, self.default_color)
@@ -402,6 +458,7 @@ class YellowPadTile(Tile):
 
 class EndTriggerTile(Tile):
     default_color = (30, 30, 30)
+    z_order = 30
 
     def update(self, dt):
         pass
@@ -422,6 +479,7 @@ class EndTriggerTile(Tile):
 
 class ShipPortalTile(Tile):
     default_color = (255, 100, 200)
+    z_order = 30
 
     def __init__(self, rect, color=None):
         super().__init__(rect, self.default_color)

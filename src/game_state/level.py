@@ -1,7 +1,7 @@
 import json
 from numbers import Number
 
-from .tile import BlockTile, GroundTile, NormalSpikeTile, ShortBlockTile, ShortSpikeTile, YellowOrbTile, YellowPadTile, ShipPortalTile
+from .tile import BlockTile, GroundTile, NormalSpikeTile, ShortBlockTile, ShortSpikeTile, SolidBlockTile, YellowOrbTile, YellowPadTile, ShipPortalTile
 
 
 class LevelMixin:
@@ -189,6 +189,7 @@ class LevelMixin:
         tile_classes = {
             "block": BlockTile,
             "block_short": ShortBlockTile,
+            "block_solid": SolidBlockTile,
             "spike_norm": NormalSpikeTile,
             "spike_short": ShortSpikeTile,
             "orb_y": YellowOrbTile,
