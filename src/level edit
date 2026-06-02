@@ -1,0 +1,68 @@
+__init__
+enter
+build pallete icons
+load level
+handle event
+update: editor key presses
+handle keyUp
+handle keyDown
+handle editMode keyDown
+handle mouseDown
+handle swipe
+handle editMode drag
+handle editMode selection drag
+finish editMode box selection
+* has selection
+* get selected indices
+set editor mode
+* normalize rotation
+* normalize block
+place block
+erase block
+delete block
+delete selected blocks
+move selected block
+move selected blocks
+rotate selected block
+rotate selected blocks
+find block at pos
+block rect
+block grid pos
+save level
+start playtest
+open level
+new level
+delete level
+open options
+render
+world to screen
+screen to world
+screen to grid
+zoom at
+render grid
+render blocks
+render tile
+render selected block outline
+render selected block outlines
+render selection box
+render ground
+render toolbar
+render mode buttons
+* playtest button rect
+* open button rect
+* new button rect
+* level options rect
+* delete level rect
+* build mode rect
+* edit mode rect
+* swipe mode rect
+render palette
+tile from block
+level rect from grid
+grid rect
+world rect to screen
+palette tile at pos
+palette rect
+is scale value
+normalize scale
+render tile (compatible)
