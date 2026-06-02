@@ -177,7 +177,7 @@ class ShortBlockTile(BlockTile):
 
 class SolidBlockTile(Tile):
     default_color = (0, 0, 0)
-    z_order = 5
+    z_order = 15
     ledge_landing_tolerance = 18
     ledge_climb_tolerance = 35
     underside_kill_speed = 650

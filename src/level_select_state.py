@@ -102,7 +102,7 @@ class LevelSelectState:
             return
 
         if self.edit_mode:
-            from level_editor_state import LevelEditorState
+            from level_editor import LevelEditorState
             self.manager.change(LevelEditorState(self.levels[self.selected_index]))
         else:
             self.manager.change(GameState(self.levels[self.selected_index]))

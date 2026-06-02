@@ -5,10 +5,10 @@ import pygame as pg
 
 from .level import LevelMixin
 from .player import PlayerMixin
-from .rendering import RenderingMixin
+from renderer import GameRenderer
 
 
-class GameState(PlayerMixin, LevelMixin, RenderingMixin):
+class GameState(PlayerMixin, LevelMixin, GameRenderer):
     def __init__(self, level_path=None, playtest_mode=False):
         self.level_path = level_path
         self.playtest_mode = playtest_mode

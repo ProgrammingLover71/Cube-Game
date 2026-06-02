@@ -15,7 +15,7 @@ class PlayerMixin:
     def handle_keydown(self, key):
         if key == pg.K_ESCAPE and getattr(self, "playtest_mode", False):
             self.stop_level_music()
-            from level_editor_state import LevelEditorState
+            from level_editor import LevelEditorState
             self.manager.change(LevelEditorState(self.level_path))
             return
 

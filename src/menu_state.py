@@ -1,6 +1,6 @@
 import pygame as pg
 from level_select_state import LevelSelectState
-from level_editor_state import LevelEditorState
+from level_editor import LevelEditorState
 
 
 class MenuState:
